@@ -3,22 +3,22 @@ import os
 
 cwd = os.getcwd()
 
-#1 convert to binary and write mct to mc
-### convert to binary
-path = cwd + '\lab5src.mct'
-binary = l5.newformat(path)
-bin = binary._binary()
-binary._2_newfile('outputsq')
+# #1 convert to binary and write mct to mc
+# ### convert to binary
+# path = cwd + '\lab5src.mct'
+# binary = l5.newformat(path)
+# bin = binary._binary()
+# binary._2_newfile('outputsq')
 
-#2
-### Check
-binary._2_newfile_with_check('outsq')
+# #2
+# ### Check
+# binary._2_newfile_with_check('outsq')
 
-#3
-### mc to mct
-l503path = cwd + '\outsq.mc'
-mcf = l5.conv_2_mct(l503path)
-mcf.write_2_newfile('hhhhhhhhh')
+# #3
+# ### mc to mct
+# l503path = cwd + '\outsq.mc'
+# mcf = l5.conv_2_mct(l503path)
+# mcf.write_2_newfile('hhhhhhhhh')
 
 
 # 4

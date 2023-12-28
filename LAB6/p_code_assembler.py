@@ -28,6 +28,7 @@ class pcode_assembler:
                         filedata[j][i] = '3'
                     elif filedata[j][i] == 'JMP':
                         filedata[j][i] = '5'
+                        
             self.binary_data = [[format(int(num[0]), '03b'), format(int(num[1]), '02b'), format(int(num[2]), '011b')] for num in filedata]
             self.ls = []
             for i in range(len(self.binary_data)):
@@ -48,33 +49,57 @@ class pcode_assembler:
                     sk = sk + hexadecimal_data[i][j]
                 el.append(sk)
             return el
+
+
     def check_asm(self, data):
+        """ Check Macro and Maive accept asm """
         row = []
         macro_as1 = ['STOP', 'RET', 'NEG', 'ADD', 'SUB', 'MUL', 'DIV', 'ISODD', 'EQ', 'NEQ', 'LT', 'LE', 'GT', 'GE']
+        naive_asm = ['LIT', 'INT', 'JMP', 'JPC','LOD', 'STO','CAL']
+        
         for i in range(len(data)):
-            if len(data[i]) != 3:
+
+            if len(data[i]) == 3:
+                if data[i][0] == 'OPR' and int(data[i][1]) != 0:
+                    pass
+                elif (data[i][0] not in naive_asm) and (data[i][0] != 'OPR'):
+                    text = f'line : {i+1} not accept.'
+                    row.append(text)  
+                elif (data[i][0] in naive_asm) and (data[i][2] != 'V'):
+                    text = f'line : {i+1} not accept.'
+                    row.append(text)
+
+            elif len(data[i]) != 3:
                 if len(data[i]) == 2:
                     if (data[i][0] == 'ASSIGN' or data[i][0] == 'ALLOC' or data[i][0] == 'JUMP' or data[i][0] == 'JZ')  and data[i][1] == 'V' :
                         pass
                     else :
                         text = f'line : {i+1} not accept.'
                         row.append(text)
-                if len(data[i]) == 1:
-                    if data[i] not in macro_as1:
+                elif len(data[i]) == 1:
+                    if data[i][0] not in macro_as1:
                         text = f'line : {i+1} not accept.'
                         row.append(text)
-        if len(row) == 0:
-            row.append('Accept.')
-            
+                elif len(data[i]) > 3:
+                    text = f'Line : {i+1} not accept.'
+                    row.append(text)
+
         return row
     
     def macro_asm_naive(self, filename):
         with open(filename, 'r') as file:
             filedata = file.read()
             self.data = ([list(map(str, line.split())) for line in filedata.split('\n')])
-        return self.data
+            self.ch = self.check_asm(self.data)
+            if len(self.ch) != 0:
+                for i in self.ch:
+                    print(i)
+                    
+            if len(self.ch) == 0:
+                return self.data
         
 
 ax = pcode_assembler()
+data = ax.read_asm_re('test.asm')
 result = ax.macro_asm_naive('test.asm')
-print(ax.check_asm(result))
+print(data)

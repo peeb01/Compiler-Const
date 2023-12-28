@@ -1,4 +1,3 @@
 LIT 0 15
 OPR 0 2
 OPR 0 0
-JUMP V
