@@ -95,6 +95,10 @@ class command:
     #             self.T = self.T + 1
 
     def _2_complement(self, val):
+        """
+        Args    : val
+        Returns : hexadecimal values
+        """
         xnary = ''
         for char in val:
             if char == '0':

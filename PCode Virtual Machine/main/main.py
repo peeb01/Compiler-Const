@@ -5,8 +5,9 @@ cm = command()
 print('\n\n*** Welcome to a PL/0 P-code machine shell! ***\n')
 
 while(1):
+    exited = ['quit', 'quit()', 'exit()', 'exit']
     commands = input('?>>>  ')
-    if commands == 'quit' or commands == 'quit()':
+    if commands in exited:
         print('\n\nExit P-code machine shell...\n')
         break
     if commands == 'load' or commands == 'load()':
